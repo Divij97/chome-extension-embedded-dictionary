@@ -7,12 +7,15 @@ document.addEventListener('keydown' , function(e) {
     if (word.length > 0) {
         chrome.runtime.sendMessage({word: word}, function(response) {
             console.log(response);
-            displayMeaningsInline(response.meaningsByType);
+            displayMeaningsInline(response);
         });
     }
 });
 
-function displayMeaningsInline(meaningsByType) {
+function displayMeaningsInline(meaningInfo) {
+    let word = meaningInfo.word;
+    let meaningsByType = meaningInfo.meaningsByType;
+
     // create a scrollable component
     let selection = window.getSelection();
     let range = selection.getRangeAt(0);
@@ -22,20 +25,21 @@ function displayMeaningsInline(meaningsByType) {
     let closeButton = document.createElement('button');
     closeButton.innerText = 'X';
     closeButton.className = 'close-button';
+    
     scrollable.appendChild(closeButton);
+    const text = document.createElement("p");
+    text.style.fontSize = '10px';
+    text.style.color = 'red';
+    text.innerHTML = `Word: ${word}<br>`;
 
-    // add points
     for (let key in meaningsByType) {
-        const point = document.createElement("p");
-        point.innerText = `${key}: ${meaningsByType[key]}`;
-        point.style.fontSize = '10px';
-        point.style.color = 'red';
-        scrollable.appendChild(point);
+        text.innerHTML += `${key}: ${meaningsByType[key]}<br>`;
     }
-
+    
+    scrollable.appendChild(text);
     closeButton.addEventListener('click', () => {
         scrollable.remove();
-      });
+    });
     
     selection.removeAllRanges();
     range.insertNode(scrollable);

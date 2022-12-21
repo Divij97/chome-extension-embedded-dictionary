@@ -1,6 +1,6 @@
 {
   "name": "Embedded-Dictionary",
-  "description": "Find meaning of words by selecting them and pressing the 'm' key",
+  "description": "Find meaning of any word by selecting them and pressing the 'm' key",
   "version": "1.0",
   "manifest_version": 3,
   "permissions": [
