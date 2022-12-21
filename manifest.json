@@ -1,0 +1,23 @@
+{
+  "name": "Embedded-Dictionary",
+  "description": "Find meaning of words by selecting them and pressing the 'm' key",
+  "version": "1.0",
+  "manifest_version": 3,
+  "permissions": [
+    "storage"
+  ],
+  "background": {
+    "service_worker": "background.js"
+  },
+  "content_scripts": [
+    {
+      "matches": ["<all_urls>"],
+      "js": ["content.js"],
+      "css": ["style.css"]
+    }
+  ],   
+  
+  "action": {
+    "default_title": "Embedded-Dictionary"
+  }
+}
